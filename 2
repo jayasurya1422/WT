@@ -1,0 +1,179 @@
+5
+Ex. No: 2
+Date: Write a PHP programs that uses arrays and functions in PHP
+Aim:
+Write a PHP programs that uses arrays and functions in PHP.
+Array in PHP
+ An array stores multiple values in one single variable
+ In PHP, there are three kinds of arrays:
+o Numeric array
+o Associative array
+o Multidimensional array
+Numeric Array in PHP
+Numeric array is an array with a numeric index
+Numeric Array Example
+<?php
+$colors = array("Red", "Green", "Blue");
+// Accessing elements
+echo $colors[0];
+echo $colors[1];
+echo $colors[2];
+?>
+OUTPUT:
+Red Green Blue
+Associative array in PHP
+Associative array is an array where each ID key is associated with a value
+Associative array Example
+<?php
+$person = array(
+"first_name" => "John",
+"last_name" => "Doe",
+"age" => 30
+);
+echo $person["first_name"];
+echo $person["last_name"];
+echo $person["age"];
+?>
+OUTPUT:
+John Doe 30
+6
+Loop through an Associative Array
+Using foreach Loop
+<?php
+$person = array(
+"first_name" => "John",
+"last_name" => "Doe",
+"age" => 30,
+"email" => "john.doe@example.com"
+);
+foreach ($person as $key => $value) {
+echo "Key: $key, Value: $value\n";
+}
+?>
+OUTPUT:
+Key: first_name, Value: John
+Key: last_name, Value: Doe
+Key: age, Value: 30
+Key: email, Value: john.doe@example.com
+Using for Loop with array_keys
+<?php
+$person = array(
+"first_name" => "John",
+"last_name" => "Doe",
+"age" => 30,
+"email" => "john.doe@example.com"
+);
+$keys = array_keys($person);
+for ($i = 0; $i < count($keys); $i++) {
+$key = $keys[$i];
+$value = $person[$key];
+echo "Key: $key, Value: $value\n";
+}
+?>
+OUTPUT:
+Key: first_name, Value: John
+Key: last_name, Value: Doe
+Key: age, Value: 30
+Key: email, Value: john.doe@example.com
+7
+Multidimensional array in PHP
+Multidimensional array is an array containing one or more arrays
+<?php
+$contacts = array(
+array(
+"name" => "Peter Parker",
+"email" => "peterparker@mail.com",
+),
+array(
+"name" => "Clark Kent",
+"email" => "clarkkent@mail.com",
+),
+array(
+"name" => "Harry Potter",
+"email" => "harrypotter@mail.com",
+)
+);
+echo "Peter Parker's Email-id is: " . $contacts[0]["email"];
+?>
+OUTPUT:
+Peter Parker's Email-id is: peterparker@mail.com
+Viewing Array Structure and Values
+<?php
+$cities = array("London", "Paris", "New York");
+Print_r($cities);
+var_dump($cities);
+?>
+Output:
+Array ( [0] => London [1] => Paris [2] => New York )
+array(3) { [0]=> string(6) "London" [1]=> string(5) "Paris" [2]=> string(8) "New York" }
+8
+User Defined Function in PHP
+Functions are group of statements that can perform a task
+Syntax:
+function functionName()
+{
+code to be executed;
+}
+User Defined Function
+<html>
+<body>
+<?php
+function whatIsToday(){
+echo "Today is " . date('l', mktime());
+}
+whatIsToday();
+?>
+</body>
+</html>
+OUTPUT:
+Today is Tuesday
+PHP Functions - Adding parameters
+<html>
+<body>
+<?php
+function getSum($num1, $num2){
+$sum = $num1 + $num2;
+echo "Sum of the two numbers $num1 and $num2 is : $sum";
+}
+getSum(10, 20);
+?>
+</body>
+</html>
+OUTPUT:
+Sum of the two numbers 10 and 20 is : 30
+9
+Swap Numbers PHP Example
+<?php
+$a = 5;
+$b = 10;
+echo "Before swapping:\n";
+echo "a = $a\n";
+echo "b = $b\n";
+$temp = $a;
+$a = $b;
+$b = $temp;
+echo "After swapping:\n";
+echo "a = $a\n";
+echo "b = $b\n";
+?>
+OUTPUT:
+Before swapping:
+a = 5
+b = 10
+After swapping:
+a = 10
+b = 5
+PHP Functions - Return values
+<html>
+<body>
+<?php
+function getSum($num1, $num2){
+$total = $num1 + $num2;
+return $total;
+}
+echo getSum(5, 10);
+?>
+</body>
+</html>
+OUTPUT:
+15
