@@ -1,0 +1,188 @@
+Aim:
+To write a Node JS program to read and write file system operation
+File System Module
+fs module is a build-in module in node js used to access file system. fs module has methods to read,
+write, append, rename, and delete data from a file stored in File System.
+Example
+const http=require('fs');
+Read File
+To read file in node js, we have both synchronous and asynchronous functions.
+Read File Sync
+fs.readFileSync method read a file synchronously.
+Filename: Index.js
+const fs=require('fs');
+var data=readFileSync("data.txt");
+console.log(data);
+/*data.txt*/
+hello node
+Output:
+<Buffer 68 65 6c 6c 6f 20 6e 6f 64 65>
+Filename: Index.js
+const fs=require('fs');
+var data=readFileSync("data.txt").toString();
+console.log(data);
+/*data.txt*/
+hello node
+Output:
+hello node
+27
+Read File
+fs.readFile read any file asynchronously using a callback function as parameter.
+Filename: Index.js
+const fs=require('fs');
+fs.readFile("data.txt",(err,data)=>{
+if(err){
+console.log("Error : ", err);
+}
+else{
+console.log(data.toString());
+}
+})
+/*data.txt*/
+hello node
+Output:
+hello node
+Read File with encoding
+fs.readFile can have a option {encoding:'utf8'} to encode binary file. Without encoding,
+NodeJS will not decode the file into a string.
+Filename: Index.js
+const fs=require('fs');
+fs.readFile("data.txt",{encoding:'utf8'},(err,data)=>{
+if(err){
+console.log("Error : ", err);
+}
+else{
+console.log(data); // .toString() not required
+}
+})
+/*data.txt*/
+hello node
+Output:
+hello node
+28
+Check File Stats
+To check file properties in NodeJS, we use fs.stat method. Node JS provides two APIs for
+both synchronous and asynchronous operations.
+stat method
+Filename: Index.js
+const fs=require('fs');
+fs.stat('src/data.txt', (err, stats) => {
+if (err) {
+console.error(err)
+}
+else{
+console.log(stats.isFile()); // true
+console.log(stats.isDirectory()); // false
+console.log(stats.size); // 1024
+}
+});
+statSync method
+Filename: Index.js
+const fs=require('fs');
+try{
+const stats = fs.statSync('/Users/joe/test.txt');
+}
+catch(err){
+console.error(err);
+}
+Write File
+To write in a file, node js use writeFile / writeFileSync methods.
+const fs=require('fs');
+fs.writeFileSync('data.txt','Hello Node');
+If data.txt file is missing in current directory, node js will create a new directory with same
+name and then write. There is no need to create a file first and then write.
+29
+writeFileSync
+To write in a file synchronously, node js used fs.writeFileSync method. The first parameter
+is file name and second is text data.
+Filename: Index.js
+const fs=require("fs");
+fs.writeFileSync('data.txt','Hello Node JS');
+writeFile
+To write in a file asynchronously, node js used fs.writeFile method. The first parameter is
+file name and second is text data and third is callback to handle errors..
+Filename: Index.js
+const fs=require("fs");
+fs.writeFile('data.txt',"hello Node",(err)=>{
+if(err){
+console.log(err)
+}
+})
+Write File with utf-8
+Filename: Index.js
+const fs=require("fs");
+fs.writeFile('data.txt',"hello Node",'utf8',(err)=>{
+if(err){
+console.log(err)
+}
+})
+30
+Append in file
+To append in a file, use appendFile or appendFileSync methods of fs. This will not
+overwrite in file like writeFile and writeFileSync.
+appendFileSync
+appendFileSync method of fs append file asynchronously.
+Filename: Index.js
+const fs=require('fs');
+fs.appendFileSync('src/data.txt',"hello Node 1",'utf8',(err)=>{
+if(err){
+console.log(err)
+}
+});
+fs.appendFileSync('src/data.txt',"hello Node 2",'utf8',(err)=>{
+if(err){
+console.log(err)
+}
+});
+Output:
+Hello Node 1
+Hello Node 2
+appendFile
+appendFile method of fs append file synchronously.
+Filename: Index.js
+const fs=require('fs');
+fs.appendFile('src/data.txt',"hello Node 1",'utf8',(err)=>{
+if(err){
+console.log(err)
+}
+});
+fs.appendFile('src/data.txt',"hello Node 2",'utf8',(err)=>{
+if(err){
+console.log(err)
+}
+});
+Output:
+Hello Node 1
+Hello Node 2
+31
+delete file
+To delete files, node js use fs.unlink or fs.unlinkSync methods.
+fs.unlinkSync
+const fs=require('fs');
+fs.unlinkSync('data.txt');
+By using fs.unlinkSync without exception handling can create runtime errors. To handle this, use
+fs.unlinkSync with exception handling
+Filename: Index.js
+const fs=require('fs');
+try{
+fs.unlinkSync('data.txt');
+console.log('file deleted successfully');
+}
+catch(err){
+console.log("Error",err);
+}
+fs.unlink
+fs.unlink is a asynchronously method to delete file with two arguments. First is file name and
+second is callback function.
+Filename: Index.js
+const fs=require('fs');
+fs.unlink('data.txt',(err)=>{
+if(err){
+console.log('Error:', err);
+}
+else{
+console.log('file deleted successfully');
+}
+})
+Output:
+file deleted successfully
