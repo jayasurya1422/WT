@@ -1,0 +1,63 @@
+# Function to add a rule to the grammar from the input format
+def add_rule(gram, rule):
+    rule = rule.replace(" ", "")  # Remove unnecessary spaces
+    lhs, rhs = rule.split("->")  # Split rule into LHS and RHS
+    alternatives = rhs.split("|")  # Handle multiple alternatives
+    if lhs not in gram:
+        gram[lhs] = []
+    gram[lhs].extend(alternatives)
+
+# Function to remove direct left recursion
+def remove_direct_recursion(gram, non_terminal):
+    """Remove direct left recursion from the grammar."""
+    alpha = []
+    beta = []
+    
+    for prod in gram[non_terminal]:
+        if prod.startswith(non_terminal):  # If production starts with the non-terminal (left recursion)
+            alpha.append(prod[len(non_terminal):])  # Remove the left-recursive part
+        else:
+            beta.append(prod)
+    
+    if alpha:  # If left recursion exists
+        new_nt = non_terminal + "'"  # Create a new non-terminal
+        gram[non_terminal] = [b + new_nt for b in beta]  # Update the original non-terminal rules
+        gram[new_nt] = [a + new_nt for a in alpha] + ['e']  # Add epsilon (e) for new non-terminal
+    return gram
+
+# Main function to eliminate both direct and indirect recursion
+def eliminate_recursion(gram):
+    non_terminals = list(gram.keys())
+    
+    for i, A in enumerate(non_terminals):
+        # Handle indirect recursion
+        for j in range(i):
+            Aj = non_terminals[j]
+            new_productions = []
+            for prod in gram[A]:
+                if prod.startswith(Aj):
+                    for Aj_prod in gram[Aj]:
+                        new_productions.append(Aj_prod + prod[len(Aj):])
+                else:
+                    new_productions.append(prod)
+            gram[A] = new_productions
+        
+        # Handle direct recursion
+        gram = remove_direct_recursion(gram, A)
+
+    return gram
+
+# Example usage:
+# Define a grammar as a dictionary
+grammar = {}
+
+# Input the grammar rule
+input_rule = 'E->E*F|F'
+add_rule(grammar, input_rule)
+
+# Eliminate left recursion
+updated_grammar = eliminate_recursion(grammar)
+
+# Output the transformed grammar
+for non_terminal, productions in updated_grammar.items():
+    print(f"{non_terminal} -> {' | '.join(productions)}")
